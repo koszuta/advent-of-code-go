@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-var medicineMolecule string
+var medicine string
 var moleculeMap map[string]*[]string
 var maxMoleculeLength int = 0
 
@@ -29,6 +29,9 @@ func main() {
 				// Lines with => are replacement molecules
 				molecule := parts[0]
 				replacement := parts[1]
+				if len(replacement) < len(molecule) {
+					panic("Replacement cannot be shorter than original molecule")
+				}
 				var replacements []string
 				r, ok := moleculeMap[molecule]
 				if !ok {
@@ -44,7 +47,7 @@ func main() {
 
 			} else if line != "" {
 				// Non-empty line without => is our medicine molecule
-				medicineMolecule = line
+				medicine = line
 			}
 		}
 	}
@@ -53,22 +56,22 @@ func main() {
 		fmt.Printf("\"%s\"->%v\n", k, *v)
 	}
 	fmt.Printf("\nmaxMoleculeLength=%d\n", maxMoleculeLength)
-	fmt.Printf("\nmedicineMolecule=%s\n", medicineMolecule)
+	fmt.Printf("\nmedicine=%s\n", medicine)
 	fmt.Println()
 
 	start := time.Now()
 	newMolecules := make(map[string]bool, 0)
 	{
-		for i := 0; i < len(medicineMolecule); i++ {
-			for j := i + 1; j <= i+maxMoleculeLength && j <= len(medicineMolecule); j++ {
-				m := medicineMolecule[i:j]
+		for i := 0; i < len(medicine); i++ {
+			for j := i + 1; j <= i+maxMoleculeLength && j <= len(medicine); j++ {
+				m := medicine[i:j]
 				replacements, ok := moleculeMap[m]
 				if ok {
 					for _, replacement := range *replacements {
 						newMolecule := make([]byte, 0)
-						newMolecule = append(newMolecule, medicineMolecule[:i]...)
+						newMolecule = append(newMolecule, medicine[:i]...)
 						newMolecule = append(newMolecule, replacement...)
-						newMolecule = append(newMolecule, medicineMolecule[j:]...)
+						newMolecule = append(newMolecule, medicine[j:]...)
 
 						newMolecules[string(newMolecule)] = true
 					}
@@ -81,39 +84,56 @@ func main() {
 	fmt.Printf("len(newMolecules)=%d\n\n", len(newMolecules))
 
 	start = time.Now()
-	steps := moleculeReplacement("e", 0, 0)
-	elapsed = time.Since(start)
-	fmt.Printf("Part 2 took %v\n", elapsed)
-	fmt.Printf("steps=%d\n", steps)
-}
 
-func moleculeReplacement(partialMolecule string, start, steps int) int {
-	// fmt.Printf("partialMolecule=%s start=%d steps=%d\n", partialMolecule, start, steps)
-	if partialMolecule == medicineMolecule {
-		return steps
-	}
-	// fmt.Printf("len(partialMolecule)=%d len(medicineMolecule)=%d\n", len(partialMolecule), len(medicineMolecule))
-	for i := start; i < len(partialMolecule); i++ {
-		for j := i + 1; j <= i+maxMoleculeLength && j <= len(partialMolecule); j++ {
-			m := partialMolecule[i:j]
-			// fmt.Printf("%s[%d:%d]=%s\n", partialMolecule, i, j, m)
-			r, found := moleculeMap[m]
-			if found {
-				// fmt.Printf("replacements=%v\n", *r)
-				for _, replacement := range *r {
-					if (i-1)+(len(partialMolecule)-j)+len(replacement) < len(medicineMolecule) {
-						partial := make([]byte, 0)
-						partial = append(partial, partialMolecule[:i]...)
-						partial = append(partial, replacement...)
-						partial = append(partial, partialMolecule[j:]...)
-						s := moleculeReplacement(string(partial), i, steps+1)
-						if s != -1 {
-							return s
+	var buildMedicine func(int)
+	chars := make([]byte, len(medicine))
+	chars[0] = 'e'
+	size := 1
+	steps, minSteps := 0, -1
+	buildMedicine = func(start int) {
+		if size == len(medicine) && string(chars) == medicine {
+			// fmt.Printf("steps=%d\n", steps)
+			if steps < minSteps || minSteps == -1 {
+				minSteps = steps
+				fmt.Printf("new minSteps=%d\n", minSteps)
+			}
+			return
+		}
+		for i := start; (i == 0 || chars[i-1] == medicine[i-1]) && i < size; i++ {
+			for j := 0; j < maxMoleculeLength && i+j < size; j++ {
+				m := string(chars[i : i+j+1])
+				replacements, found := moleculeMap[m]
+				if found {
+					for _, r := range *replacements {
+						replExtra := len(r) - len(m)
+						steps++
+						size += replExtra
+						if size <= len(medicine) {
+							// Shift over chars to make room for repl molecule
+							if replExtra != 0 {
+								copy(chars[i+len(r):], chars[i+len(m):])
+							}
+							// Copy in repl molecule chars
+							copy(chars[i:], r)
+
+							buildMedicine(i)
+
+							// Copy in original molecule chars
+							copy(chars[i:], m)
+							// Move rest of chars back
+							if replExtra != 0 {
+								copy(chars[i+len(m):], chars[i+len(r):])
+							}
 						}
+						size -= replExtra
+						steps--
 					}
 				}
 			}
 		}
 	}
-	return -1
+	buildMedicine(0)
+
+	fmt.Printf("Part 2 took %v\n", time.Since(start))
+	fmt.Printf("minSteps=%d\n", minSteps)
 }

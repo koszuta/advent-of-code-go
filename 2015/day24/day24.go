@@ -27,8 +27,8 @@ func main() {
 	group1 := make([]int, len(packages))
 	sum1, size1 := 0, 0
 	var packGroup1 func(int)
-	packGroup1 = func(j int) {
-		for i := j; i < len(packages); i++ {
+	packGroup1 = func(start int) {
+		for i := start; i < len(packages); i++ {
 			p := packages[i]
 			sum1 += p
 			group1[size1] = p
@@ -51,8 +51,8 @@ func main() {
 				/*****************************************/
 				sum2, size2 := 0, 0
 				var packGroup2 func(int)
-				packGroup2 = func(j int) {
-					for i := j; i < len(remaining); i++ {
+				packGroup2 = func(start int) {
+					for i := start; i < len(remaining); i++ {
 						p := remaining[i]
 						sum2 += p
 						size2++
