@@ -65,7 +65,7 @@ func find(name string, obj object) (object, bool) {
 func parseSatellites(obj *object) int {
 	indirectOrbits := 0
 
-	file, err := os.Open(".\\input.txt")
+	file, err := os.Open("./input.txt")
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)

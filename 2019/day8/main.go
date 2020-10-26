@@ -13,7 +13,7 @@ const stride = width * height
 func main() {
 	fmt.Printf("Go...\n")
 
-	file, err := os.Open(".\\input.txt")
+	file, err := os.Open("./input.txt")
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
@@ -23,7 +23,7 @@ func main() {
 
 	input := []byte(scanner.Text())
 	if len(input)%stride != 0 {
-		fmt.Printf("%s%d%s\n", "Invalid input data: ", len(input)%stride, " extra bytes")
+		fmt.Printf("Invalid input data: %d extra bytes\n", len(input)%stride)
 		os.Exit(1)
 	}
 

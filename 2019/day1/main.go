@@ -10,7 +10,7 @@ import (
 func main() {
 	fmt.Printf("Go...\n")
 
-	file, err := os.Open(".\\input.txt")
+	file, err := os.Open("./input.txt")
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
@@ -25,8 +25,8 @@ func main() {
 			fmt.Printf("%s\n", err)
 			os.Exit(1)
 		}
-		
-		for ; mass > 8; {
+
+		for mass > 8 {
 			mass /= 3
 			mass -= 2
 			fuel += mass
