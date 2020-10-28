@@ -32,63 +32,61 @@ func main() {
 
 	var maxAsteroid map[float64][]float64
 	max, maxX, maxY := 0, 0, 0
-	for y, r := range asteroids {
-		for x, a := range r {
-			if a == '#' {
-				los := make(map[float64][]float64)
-				for w, rr := range asteroids {
-					for v, aa := range rr {
-						if (v != x || w != y) && aa == '#' {
+	for y, row := range asteroids {
+		for x, asteroid := range row {
+			if asteroid == '#' {
+				θs := make(map[float64][]float64)
+				for w, row := range asteroids {
+					for v, asteroid := range row {
+						if (v != x || w != y) && asteroid == '#' {
 							a, b := float64(v-x), float64(w-y)
 							θ := math.Atan2(b, a) + (math.Pi / 2)
-							dist := math.Sqrt(float64(a*a + b*b))
-							los[θ] = append(los[θ], dist)
+							r := math.Sqrt(float64(a*a + b*b))
+							θs[θ] = append(θs[θ], r)
 						}
 					}
 				}
-				// log.Printf("(%d,%d) %v\n", x, y, los)
-				asteroidsSeen := len(los)
-				if asteroidsSeen > max {
-					max = asteroidsSeen
+				if len(θs) > max {
+					max = len(θs)
 					maxX = x
 					maxY = y
-					maxAsteroid = los
+					maxAsteroid = θs
 				}
 			}
 		}
 	}
 	log.Printf("%d asteroids seen from (%d, %d)\n", max, maxX, maxY)
 
-	loss := make([]float64, 0, len(maxAsteroid))
-	for k, v := range maxAsteroid {
-		sort.Float64s(v)
-		loss = append(loss, k)
+	θs := make([]float64, 0, len(maxAsteroid))
+	for θ, r := range maxAsteroid {
+		sort.Float64s(r)
+		θs = append(θs, θ)
 	}
-	sort.Slice(loss, func(i, j int) bool {
-		q, r := loss[i], loss[j]
-		if q < 0 && r >= 0 {
+	sort.Slice(θs, func(i, j int) bool {
+		θ1, θ2 := θs[i], θs[j]
+		if θ1 < 0 && θ2 >= 0 {
 			return false
 		}
-		if q >= 0 && r < 0 {
+		if θ1 >= 0 && θ2 < 0 {
 			return true
 		}
-		return q < r
+		return θ1 < θ2
 	})
 
 	count := 0
 	for {
-		for _, los := range loss {
-			if len(maxAsteroid[los]) != 0 {
+		for _, θ := range θs {
+			if len(maxAsteroid[θ]) != 0 {
 				count++
 				if count == http.StatusOK {
-					θ, r := los-(math.Pi/2), maxAsteroid[los][0]
+					θ, r := θ-(math.Pi/2), maxAsteroid[θ][0]
 					log.Printf("θ=%f r=%f\n", θ, r)
 					x, y := maxX+int(r*math.Cos(θ)), maxY+int(r*math.Sin(θ))
-					log.Printf("200th asteroid vaporized (%d,%d)\n", x, y)
+					log.Printf("200th asteroid vaporized is (%d, %d)\n", x, y)
 					log.Printf("ans=%d\n", 100*x+y)
 					os.Exit(0)
 				}
-				maxAsteroid[los] = maxAsteroid[los][1:]
+				maxAsteroid[θ] = maxAsteroid[θ][1:]
 			}
 		}
 	}
