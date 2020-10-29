@@ -138,8 +138,7 @@ func intcodeCPU(instrs []int, in, out chan int) {
 		case 3: // input
 			v, ok := <-in
 			if !ok {
-				close(out)
-				return
+				goto END
 			}
 			write(v, ptr, paramModes%10)
 			ptr++
@@ -175,14 +174,15 @@ func intcodeCPU(instrs []int, in, out chan int) {
 			ptr++
 
 		case 99: // halt
-			close(out)
-			return
+			goto END
 
 		default:
 			log.Println(instrs)
 			log.Panicf("encountered unknown intcode %d at index %d\n", instrs[ptr], ptr)
 		}
 	}
+END:
+	close(out)
 }
 
 func startIntcodeCPU(instrs []int, in chan int) chan int {
@@ -245,6 +245,7 @@ func main() {
 				v1 = v2
 			}
 		}
+		close(in)
 	}
 	log.Printf("%d panels painted\n", len(panels))
 
