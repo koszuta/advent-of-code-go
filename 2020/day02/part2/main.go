@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"regexp"
 	"strconv"
-	"strings"
 )
 
 /*
@@ -22,34 +22,24 @@ func main() {
 		log.Panicln(err)
 	}
 	defer file.Close()
+	scanner := bufio.NewScanner(file)
 
 	goodPasswords := 0
-	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := scanner.Text()
+		// Split the line on non-word chars
+		re := regexp.MustCompile("\\W+")
+		parts := re.Split(scanner.Text(), 4)
 
-		// Get the password
-		parts := strings.Split(line, ": ")
-		password := parts[1]
-
-		// Get the letter
-		parts = strings.Split(parts[0], " ")
-		letter := []rune(parts[1])[0]
-
-		// Get the positions
-		parts = strings.Split(parts[0], "-")
+		// Get the 1st position, 2nd position, letter, and password from the line
 		idx1, _ := strconv.Atoi(parts[0])
 		idx2, _ := strconv.Atoi(parts[1])
+		letter := []rune(parts[2])[0]
+		password := parts[3]
 
 		// Check if the letter shows up at exactly one of the positions
-		p1, p2 := 0, 0
-		if []rune(password)[idx1-1] == letter {
-			p1 = 1
-		}
-		if []rune(password)[idx2-1] == letter {
-			p2 = 1
-		}
-		if p1^p2 == 1 {
+		b1 := []rune(password)[idx1-1] == letter
+		b2 := []rune(password)[idx2-1] == letter
+		if b1 != b2 {
 			goodPasswords++
 		}
 	}

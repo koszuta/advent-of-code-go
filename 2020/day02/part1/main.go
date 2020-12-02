@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -22,24 +23,19 @@ func main() {
 		log.Panicln(err)
 	}
 	defer file.Close()
+	scanner := bufio.NewScanner(file)
 
 	goodPasswords := 0
-	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := scanner.Text()
+		// Split the line on non-word chars
+		re := regexp.MustCompile("\\W+")
+		parts := re.Split(scanner.Text(), 4)
 
-		// Get the password
-		parts := strings.Split(line, ": ")
-		password := parts[1]
-
-		// Get the letter
-		parts = strings.Split(parts[0], " ")
-		letter := parts[1]
-
-		// Get the min/max count
-		parts = strings.Split(parts[0], "-")
+		// Get the min, max, letter, and password from the line
 		min, _ := strconv.Atoi(parts[0])
 		max, _ := strconv.Atoi(parts[1])
+		letter := parts[2]
+		password := parts[3]
 
 		// Check if the letter is within the valid range
 		count := strings.Count(password, letter)
