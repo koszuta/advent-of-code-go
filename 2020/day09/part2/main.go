@@ -7,21 +7,8 @@ import (
 	"strconv"
 )
 
-func partOne(nums []int) int {
-OUTER:
-	for i := 25; i < len(nums); i++ {
-		num := nums[i]
-		for j := i - 25; j < i; j++ {
-			for k := j + 1; k < i; k++ {
-				if num == nums[j]+nums[k] {
-					continue OUTER
-				}
-			}
-		}
-		return num
-	}
-	return 0
-}
+// Answer from Part One
+var answer = 1038347917
 
 func main() {
 	// Puzzle input
@@ -35,32 +22,26 @@ func main() {
 		nums = append(nums, num)
 	}
 
-	// Get the answer from Part One
-	answer := partOne(nums)
-
 	// Find a contiguous set of numbers which sum to the answer from Part One
 	sum := 0
 	set := make([]int, 0, 0)
-OUTER:
 	for i := 0; i < len(nums); i++ {
-		for j := i; j < len(nums); j++ {
-			num := nums[j]
-			if sum+num > answer {
-				// If adding this number would go past the answer,
-				// reset everything, and check from the next starting number
-				sum = 0
-				set = make([]int, 0, 0)
-				continue OUTER
-			} else {
-				// Otherwise, add this number to the set
-				sum += num
-				set = append(set, num)
+		sum += nums[i]
+		set = append(set, nums[i])
 
-				// If we hit the answer exactly, stop checking
-				if sum == answer {
-					break OUTER
-				}
-			}
+		// Remove numbers from the front of the set until the sum is not greater than the answer
+		var j int
+		for j = 0; sum > answer; j++ {
+			sum -= set[j]
+		}
+		if j < len(set) {
+			set = set[j:]
+		} else {
+			set = make([]int, 0, 0)
+		}
+
+		if sum == answer {
+			break
 		}
 	}
 
