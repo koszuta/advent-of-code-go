@@ -36,7 +36,7 @@ func main() {
 	pathCounts[0] = 1
 	for i := 1; i < len(jolts); i++ {
 		sum := 0
-		for j := i - 1; j >= 0 && jolts[j] >= jolts[i]-3; j-- {
+		for j := i - 1; j >= 0 && jolts[i]-jolts[j] <= 3; j-- {
 			sum += pathCounts[jolts[j]]
 		}
 		pathCounts[jolts[i]] = sum
