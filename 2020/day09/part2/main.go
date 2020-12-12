@@ -7,6 +7,13 @@ import (
 	"strconv"
 )
 
+/*
+ *   --- Day 9: Encoding Error ---
+ *         --- Part Two ---
+ *
+ *   https://adventofcode.com/2020/day/9#part2
+ */
+
 // Answer from Part One
 var answer = 1038347917
 

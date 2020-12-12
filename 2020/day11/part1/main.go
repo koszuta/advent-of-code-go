@@ -7,6 +7,13 @@ import (
 	"reflect"
 )
 
+/*
+ *   --- Day 11: Seating System ---
+ *          --- Part One ---
+ *
+ *   https://adventofcode.com/2020/day/11
+ */
+
 var rows, cols int
 var spaces []rune
 

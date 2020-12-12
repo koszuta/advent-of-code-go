@@ -8,6 +8,13 @@ import (
 	"strconv"
 )
 
+/*
+ *   --- Day 10: Adapter Array ---
+ *         --- Part Two ---
+ *
+ *   https://adventofcode.com/2020/day/10#part2
+ */
+
 func main() {
 	// Puzzle input
 	file, _ := os.Open("../input.txt")

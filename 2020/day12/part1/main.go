@@ -7,6 +7,13 @@ import (
 	"strconv"
 )
 
+/*
+ *   --- Day 12: Rain Risk ---
+ *       --- Part One ---
+ *
+ *   https://adventofcode.com/2020/day/12
+ */
+
 type instruction struct {
 	action string
 	val    int

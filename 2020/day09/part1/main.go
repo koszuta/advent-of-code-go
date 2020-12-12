@@ -7,6 +7,13 @@ import (
 	"strconv"
 )
 
+/*
+ *   --- Day 9: Encoding Error ---
+ *         --- Part One ---
+ *
+ *   https://adventofcode.com/2020/day/9
+ */
+
 func main() {
 	// Puzzle input
 	file, _ := os.Open("../input.txt")
