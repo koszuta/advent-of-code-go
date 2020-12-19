@@ -56,6 +56,7 @@ func main() {
 	}
 
 	for i := 0; i < cycles; i++ {
+		// start := time.Now()
 		activeNeighborCounts := make(map[coord4D]int)
 		for cube := range activeCubes {
 			for _, neighbor := range getNeighbors(cube) {
@@ -69,15 +70,18 @@ func main() {
 
 		activeBuf := make(map[coord4D]struct{})
 		for cube, count := range activeNeighborCounts {
-			_, active := activeCubes[cube]
-			if active && (count == 2 || count == 3) {
-				activeBuf[cube] = struct{}{}
+			if count == 2 {
+				_, active := activeCubes[cube]
+				if active {
+					activeBuf[cube] = struct{}{}
+				}
 			}
-			if !active && count == 3 {
+			if count == 3 {
 				activeBuf[cube] = struct{}{}
 			}
 		}
 		activeCubes = activeBuf
+		// log.Println("update", i+1, "took", time.Since(start))
 	}
 
 	log.Println("the number of active hypercubes after the sixth cycle is", len(activeCubes))
