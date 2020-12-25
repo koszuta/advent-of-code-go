@@ -24,10 +24,6 @@ func index(x, y, z, n int) int {
 
 // CYK Algorithm: https://en.wikipedia.org/wiki/CYK_algorithm#As_pseudocode
 func cyk(I string, R []rule, indexOfSymbol map[string]int) bool {
-	// defer func(start time.Time) {
-	// 	log.Println(I, "took", time.Since(start))
-	// }(time.Now())
-
 	n := len(I)
 	r := len(R)
 
@@ -66,6 +62,42 @@ func cyk(I string, R []rule, indexOfSymbol map[string]int) bool {
 	return P[index(n-1, 0, 0, n)]
 }
 
+func parseRule(line string) rule {
+	parts := strings.Split(line, " ")
+
+	symbol := parts[0][:len(parts[0])-1]
+	newRule := rule{}
+	newRule.symbol = symbol
+
+	sub := subRule{}
+	sub.symbols = make([]string, 0, 0)
+	for i := 1; i < len(parts); i++ {
+		part := parts[i]
+		if part == "|" {
+			if len(sub.symbols) != 2 && len(sub.symbols) != 0 {
+				log.Panicln("a production must have zero or two variables", sub.symbols)
+			}
+			if len(sub.symbols) > 0 {
+				newRule.subRules = append(newRule.subRules, sub)
+				sub = subRule{}
+				sub.symbols = make([]string, 0, 0)
+			}
+
+		} else if part[0] == '"' {
+			t := part[1 : len(part)-1]
+			newRule.terminals = append(newRule.terminals, t)
+
+		} else {
+			symbol := part
+			sub.symbols = append(sub.symbols, symbol)
+		}
+	}
+	if len(sub.symbols) > 0 {
+		newRule.subRules = append(newRule.subRules, sub)
+	}
+	return newRule
+}
+
 func main() {
 	// Puzzle input
 	file, _ := os.Open("input.txt")
@@ -78,40 +110,7 @@ func main() {
 		if line == "" {
 			break
 		}
-		parts := strings.Split(line, " ")
-
-		symbol := parts[0][:len(parts[0])-1]
-		newRule := rule{}
-		newRule.symbol = symbol
-
-		sub := subRule{}
-		sub.symbols = make([]string, 0, 0)
-		for i := 1; i < len(parts); i++ {
-			part := parts[i]
-			if part == "|" {
-				if len(sub.symbols) != 2 && len(sub.symbols) != 0 {
-					log.Panicln("a production must have zero or two variables", sub.symbols)
-				}
-				if len(sub.symbols) > 0 {
-					newRule.subRules = append(newRule.subRules, sub)
-					sub = subRule{}
-					sub.symbols = make([]string, 0, 0)
-				}
-
-			} else if part[0] == '"' {
-				t := part[1 : len(part)-1]
-				newRule.terminals = append(newRule.terminals, t)
-
-			} else {
-				symbol := part
-				sub.symbols = append(sub.symbols, symbol)
-			}
-		}
-		if len(sub.symbols) > 0 {
-			newRule.subRules = append(newRule.subRules, sub)
-		}
-
-		rules = append(rules, newRule)
+		rules = append(rules, parseRule(line))
 	}
 	sort.Slice(rules, func(i, j int) bool {
 		return rules[i].symbol < rules[j].symbol
@@ -125,17 +124,15 @@ func main() {
 
 	// Check if each message can be generated from the grammar
 	validMessageCount := 0
-	// start := time.Now()
 	for scanner.Scan() {
 		message := scanner.Text()
 
 		inGrammar := cyk(message, rules, indexOfSymbol)
 
-		// log.Println("is", message, "in grammar?", inGrammar)
 		if inGrammar {
 			validMessageCount++
 		}
 	}
-	// log.Println(validMessageCount, "took", time.Since(start))
+
 	log.Println(validMessageCount, "messages match rule 0")
 }
