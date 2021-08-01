@@ -26,14 +26,13 @@ func init() {
 }
 
 func main() {
-	code := ""
-
 	file, err := os.Open("../input.txt")
 	if err != nil {
 		log.Panicln(err)
 	}
 	defer file.Close()
 
+	code := ""
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		for _, dir := range scanner.Text() {

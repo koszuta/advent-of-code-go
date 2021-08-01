@@ -32,7 +32,7 @@ func main() {
 		log.Panicln(err)
 	}
 
-OUTER:
+OUT:
 	for _, instruction := range strings.Split(string(file), ", ") {
 		instr := []rune(instruction)
 		dir := instr[0]
@@ -48,7 +48,7 @@ OUTER:
 
 			_, found := prevPositions[position]
 			if found {
-				break OUTER
+				break OUT
 			}
 			prevPositions[position] = struct{}{}
 		}
