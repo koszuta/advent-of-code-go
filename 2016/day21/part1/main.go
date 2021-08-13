@@ -11,9 +11,9 @@ import (
 
 /*
  *   --- Day 21: Scrambled Letters and Hash ---
- *          --- Part One ---
+ *                --- Part One ---
  *
- *   https://adventofcode.com/2016/day/20
+ *   https://adventofcode.com/2016/day/21
  */
 
 const password = "abcdefgh"
