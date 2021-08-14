@@ -26,8 +26,7 @@ func init() {
 
 func main() {
 	states[startingState] = struct{}{}
-	// veryLargeNumber := 9_223_372_036_854_775_807
-	// steps := moveData(0, veryLargeNumber, startingState)
+	// steps := moveData(0, math.MaxInt64, startingState)
 
 	// I manually found the route through the printed grid
 	// Just use the same technique as the example; it's pretty straight forward
