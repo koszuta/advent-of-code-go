@@ -1,7 +1,20 @@
-<h1>Advent of Code</h1>
-<h3>2020 Personal Stats:</h3>
-<pre>      <span class="leaderboard-daydesc-first">--------Part 1--------</span>   <span class="leaderboard-daydesc-both">--------Part 2--------</span>
-Day   <span class="leaderboard-daydesc-first">    Time   Rank  Score</span>   <span class="leaderboard-daydesc-both">    Time   Rank  Score</span>
+# Advent of Code
+
+## Personal Stats
+
+### 2021
+
+<pre>
+      <span style="color: #9999cc;">-------Part 1--------</span>   <span style="color: #ffff66;">-------Part 2--------</span>
+Day   <span style="color: #9999cc;">    Time  Rank  Score</span>   <span style="color: #ffff66;">    Time  Rank  Score</span>
+  <a href="https://adventofcode.com/2021/day/1">1</a>   <a href="/2021/day01/part1/main.go">00:03:50  2046      0</a>   <a href="/2021/day01/part2/main.go">00:08:10  1736      0</a>
+</pre>
+
+### 2020
+
+<pre>
+      <span style="color: #9999cc;">--------Part 1--------</span>   <span style="color: #ffff66;">--------Part 2--------</span>
+Day   <span style="color: #9999cc;">    Time   Rank  Score</span>   <span style="color: #ffff66;">    Time   Rank  Score</span>
  <a href="https://adventofcode.com/2020/day/25">25</a>   <a href="/2020/day25/main.go">00:17:02   1133      0   00:17:35    990      0</a>
  <a href="https://adventofcode.com/2020/day/24">24</a>   <a href="/2020/day24/part1/main.go">00:55:22   2851      0</a>   <a href="/2020/day24/part2/main.go">01:36:05   2562      0</a>
  <a href="https://adventofcode.com/2020/day/23">23</a>   <a href="/2020/day23/part1/main.go">01:05:02   2672      0</a>   <a href="/2020/day23/part2/main.go">15:16:19   7686      0</a>
