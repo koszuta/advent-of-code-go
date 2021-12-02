@@ -7,6 +7,7 @@
 <pre>
       <span style="color: #9999cc;">-------Part 1--------</span>   <span style="color: #ffff66;">-------Part 2--------</span>
 Day   <span style="color: #9999cc;">    Time  Rank  Score</span>   <span style="color: #ffff66;">    Time  Rank  Score</span>
+  <a href="https://adventofcode.com/2021/day/2">2</a>   <a href="/2021/day02/part1/main.go">00:03:11  1161      0</a>   <a href="/2021/day02/part2/main.go">00:04:51   788      0</a>
   <a href="https://adventofcode.com/2021/day/1">1</a>   <a href="/2021/day01/part1/main.go">00:03:50  2046      0</a>   <a href="/2021/day01/part2/main.go">00:08:10  1736      0</a>
 </pre>
 
