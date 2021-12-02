@@ -15,7 +15,6 @@ import (
  */
 
 func main() {
-	// Puzzle input
 	file, _ := os.Open("../input.txt")
 	defer file.Close()
 
