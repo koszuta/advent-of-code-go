@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 /*
@@ -15,6 +16,17 @@ import (
  */
 
 func main() {
+	defer func(t time.Time) {
+		log.Println("took", time.Since(t))
+	}(time.Now())
+
+	oxygenGeneratorRating, co2ScrubberRating := doPart2()
+	log.Println("oxygen generator rating:", oxygenGeneratorRating)
+	log.Println("CO2 scrubber rating:", co2ScrubberRating)
+	log.Println("life support rating:", oxygenGeneratorRating*co2ScrubberRating)
+}
+
+func doPart2() (int64, int64) {
 	file, _ := os.Open("../input.txt")
 	defer file.Close()
 
@@ -73,7 +85,5 @@ func main() {
 		}
 	})
 
-	log.Println("oxygen generator rating:", oxygenGeneratorRating)
-	log.Println("CO2 scrubber rating:", co2ScrubberRating)
-	log.Println("life support rating:", oxygenGeneratorRating*co2ScrubberRating)
+	return oxygenGeneratorRating, co2ScrubberRating
 }

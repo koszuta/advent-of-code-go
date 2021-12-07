@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 /*
@@ -15,6 +16,17 @@ import (
  */
 
 func main() {
+	defer func(t time.Time) {
+		log.Println("took", time.Since(t))
+	}(time.Now())
+
+	g, e := doPart1()
+	log.Println("gamma rate:", g)
+	log.Println("epsilon rate:", e)
+	log.Println("power consumption:", g*e)
+}
+
+func doPart1() (int64, int64) {
 	file, _ := os.Open("../input.txt")
 	defer file.Close()
 
@@ -48,7 +60,5 @@ func main() {
 
 	g, _ := strconv.ParseInt(gamma, 2, 64)
 	e, _ := strconv.ParseInt(eplison, 2, 64)
-	log.Println("gamma rate:", g)
-	log.Println("epsilon rate:", e)
-	log.Println("power consumption:", g*e)
+	return g, e
 }

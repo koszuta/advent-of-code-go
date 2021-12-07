@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 /*
@@ -25,6 +26,15 @@ type bingoSpace struct {
 }
 
 func main() {
+	defer func(t time.Time) {
+		log.Println("took", time.Since(t))
+	}(time.Now())
+
+	score := doPart2()
+	log.Println("score:", score)
+}
+
+func doPart2() int {
 	file, _ := os.Open("../input.txt")
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
@@ -69,8 +79,7 @@ func main() {
 			if marked := markNumber(calledNum, boards[i]); marked {
 				if boardWon(boards[i]) {
 					if len(boards) == 1 {
-						log.Println("score:", calledNum*scoreBoard(boards[0]))
-						os.Exit(0)
+						return calledNum * scoreBoard(boards[0])
 					}
 					boards = append(boards[:i], boards[i+1:]...)
 					continue
@@ -80,6 +89,7 @@ func main() {
 		}
 	}
 	log.Panicln("couldn't find a winning board \u200d")
+	return 0
 }
 
 func markNumber(calledNum int, board bingoBoard) bool {
@@ -102,8 +112,8 @@ ACROSS:
 				continue ACROSS
 			}
 		}
-		log.Println("won across on row", j)
-		printBoard(board)
+		// log.Println("won across on row", j)
+		// printBoard(board)
 		return true
 	}
 DOWN:
@@ -113,8 +123,8 @@ DOWN:
 				continue DOWN
 			}
 		}
-		log.Println("won down on column", i)
-		printBoard(board)
+		// log.Println("won down on column", i)
+		// printBoard(board)
 		return true
 	}
 	return false

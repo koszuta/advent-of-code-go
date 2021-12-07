@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 /*
@@ -15,6 +16,15 @@ import (
  */
 
 func main() {
+	defer func(t time.Time) {
+		log.Println("took", time.Since(t))
+	}(time.Now())
+
+	nIncreases := doPart1()
+	log.Println("the number of measurements larger than the previous measurement is", nIncreases)
+}
+
+func doPart1() int {
 	file, _ := os.Open("../input.txt")
 	defer file.Close()
 
@@ -37,5 +47,6 @@ func main() {
 			nIncreases++
 		}
 	}
-	log.Println("the number of measurements larger than the previous measurement is", nIncreases)
+
+	return nIncreases
 }

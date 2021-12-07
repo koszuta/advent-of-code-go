@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 /*
@@ -24,6 +25,15 @@ type coord2D struct {
 }
 
 func main() {
+	defer func(t time.Time) {
+		log.Println("took", time.Since(t))
+	}(time.Now())
+
+	nOverlaps := doPart1()
+	log.Println("the number of points where at least two lines overlap is", nOverlaps)
+}
+
+func doPart1() int {
 	file, _ := os.Open("../input.txt")
 	defer file.Close()
 
@@ -71,7 +81,7 @@ func main() {
 			nOverlaps++
 		}
 	}
-	log.Println("the number of points where at least two lines overlap is", nOverlaps)
+	return nOverlaps
 }
 
 func parseCoord(s string) coord2D {

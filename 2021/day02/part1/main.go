@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 /*
@@ -16,6 +17,17 @@ import (
  */
 
 func main() {
+	defer func(t time.Time) {
+		log.Println("took", time.Since(t))
+	}(time.Now())
+
+	pos, depth := doPart1()
+	log.Println("pos:", pos)
+	log.Println("depth:", depth)
+	log.Println("prod:", pos*depth)
+}
+
+func doPart1() (int, int) {
 	file, _ := os.Open("../input.txt")
 	defer file.Close()
 
@@ -36,7 +48,5 @@ func main() {
 		}
 	}
 
-	log.Println("pos:", pos)
-	log.Println("depth:", depth)
-	log.Println("prod:", pos*depth)
+	return pos, depth
 }
