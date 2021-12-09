@@ -58,15 +58,15 @@ func doPart2() int {
 }
 
 func findBasin(x, y int) int {
-	return len(doFindBasin(x, y, make([]int, 0)))
+	return doFindBasin(x, y, 0)
 }
 
-func doFindBasin(x, y int, basin []int) []int {
+func doFindBasin(x, y int, basin int) int {
 	if heatMap[y][x] == 9 {
 		return basin
 	}
 
-	basin = append(basin, heatMap[y][x])
+	basin++
 	heatMap[y][x] = 9
 
 	if x > 0 {
