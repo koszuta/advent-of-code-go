@@ -10,7 +10,7 @@ import (
 
 /*
  *   --- Day 10: Syntax Scoring ---
- *        --- Part One ---
+ *          --- Part One ---
  *
  *   https://adventofcode.com/2021/day/10
  */

@@ -11,7 +11,7 @@ import (
 
 /*
  *   --- Day 10: Syntax Scoring ---
- *        --- Part Two ---
+ *          --- Part Two ---
  *
  *   https://adventofcode.com/2021/day/10#part2
  */
