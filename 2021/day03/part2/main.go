@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const expectedResult = 4406844
+
 /*
  *   --- Day 3: Binary Diagnostic ---
  *           --- Part Two ---

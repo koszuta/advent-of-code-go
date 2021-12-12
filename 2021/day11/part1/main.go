@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const expectedResult = 1599
+
 /*
  *   --- Day 11: Dumbo Octopus ---
  *         --- Part One ---
@@ -68,7 +70,7 @@ func flash(x, y int) (flashes int) {
 		flashes++
 
 		doFlash := func(x, y int) {
-			if x >= 0 && y >= 0 && y < len(octopuses) && x < len(octopuses[y]) && octopuses[y][x] != 0 {
+			if x >= 0 && y >= 0 && y < size && x < size && octopuses[y][x] != 0 {
 				octopuses[y][x]++
 				flashes += flash(x, y)
 			}

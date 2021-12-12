@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const expectedResult = 2858785164
+
 /*
  *   --- Day 10: Syntax Scoring ---
  *          --- Part Two ---

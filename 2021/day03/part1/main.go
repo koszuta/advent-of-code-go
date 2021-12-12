@@ -15,6 +15,8 @@ import (
  *   https://adventofcode.com/2021/day/3
  */
 
+const expectedResult = 3687446
+
 func main() {
 	defer func(t time.Time) {
 		log.Println("took", time.Since(t))

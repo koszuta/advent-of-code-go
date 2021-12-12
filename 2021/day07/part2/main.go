@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const expectedResult = 95476244
+
 /*
  *   --- Day 7: The Treachery of Whales ---
  *              --- Part Two ---

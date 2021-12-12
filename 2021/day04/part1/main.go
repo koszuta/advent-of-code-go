@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+const expectedResult = 87456
+
 /*
  *   --- Day 4: Giant Squid ---
  *        --- Part One ---

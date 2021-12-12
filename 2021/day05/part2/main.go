@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const expectedResult = 21577
+
 /*
  *   --- Day 5: Hydrothermal Venture ---
  *            --- Part Two ---

@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+const expectedResult = 1770823541496
+
 /*
  *   --- Day 6: Lanternfish ---
  *        --- Part Two ---

@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const expectedResult = 1558722
+
 /*
  *   --- Day 9: Smoke Basin ---
  *        --- Part Two ---
@@ -23,8 +25,8 @@ func main() {
 		log.Println("took", time.Since(t))
 	}(time.Now())
 
-	prod := doPart2()
-	log.Println("the sizes of the three largest basins multiplied together is", prod)
+	sizeProd := doPart2()
+	log.Println("the sizes of the three largest basins multiplied together is", sizeProd)
 }
 
 func doPart2() int {

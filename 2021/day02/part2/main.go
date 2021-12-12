@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const expectedResult = 1880593125
+
 /*
  *   --- Day 2: Dive! ---
  *     --- Part Two ---

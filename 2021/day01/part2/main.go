@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const expectedResult = 1611
+
 /*
  *   --- Day 1: Sonar Sweep ---
  *        --- Part Two ---

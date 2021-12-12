@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const expectedResult = 504
+
 /*
  *   --- Day 9: Smoke Basin ---
  *        --- Part One ---

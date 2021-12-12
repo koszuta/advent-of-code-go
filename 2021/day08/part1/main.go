@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const expectedResult = 330
+
 /*
  *   --- Day 8: Seven Segment Search ---
  *            --- Part One ---
