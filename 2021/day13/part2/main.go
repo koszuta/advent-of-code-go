@@ -20,7 +20,7 @@ const expectedResult = `
 
 /*
  *   --- Day 13: Transparent Origami ---
- *          --- Part Two ---
+ *            --- Part Two ---
  *
  *   https://adventofcode.com/2021/day/13#part2
  */

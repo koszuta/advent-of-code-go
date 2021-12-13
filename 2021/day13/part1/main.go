@@ -13,7 +13,7 @@ const expectedResult = 610
 
 /*
  *   --- Day 13: Transparent Origami ---
- *          --- Part One ---
+ *            --- Part One ---
  *
  *   https://adventofcode.com/2021/day/13
  */
