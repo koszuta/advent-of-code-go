@@ -6,7 +6,7 @@ func TestPart2(t *testing.T) {
 	actual := doPart2()
 	if actual != expectedResult {
 		t.Logf("test failed; expected %d, got %d", expectedResult, actual)
-		t.Fail()
+		t.FailNow()
 	}
 }
 

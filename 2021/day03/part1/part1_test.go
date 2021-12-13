@@ -7,7 +7,7 @@ func TestPart1(t *testing.T) {
 	actual := g * e
 	if actual != expectedResult {
 		t.Logf("test failed; expected %d, got %d", expectedResult, actual)
-		t.Fail()
+		t.FailNow()
 	}
 }
 
