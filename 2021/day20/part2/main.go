@@ -10,7 +10,7 @@ const expectedResult = 20122
 
 /*
  *   --- Day 20: Trench Map ---
- *      --- Part Two ---
+ *        --- Part Two ---
  *
  *   https://adventofcode.com/2021/day/20#part2
  */
