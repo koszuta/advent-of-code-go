@@ -10,8 +10,8 @@ import (
 const expectedResult = 0
 
 /*
- *   --- Day 18:  ---
- *      --- Part Two ---
+ *   --- Day 18: Snailfish ---
+ *       --- Part Two ---
  *
  *   https://adventofcode.com/2021/day/18#part2
  */

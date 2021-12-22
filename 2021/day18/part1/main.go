@@ -2,24 +2,25 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"time"
 )
 
 const expectedResult = 0
 
 /*
- *   --- Day 18:  ---
- *      --- Part One ---
+ *   --- Day 18: Snailfish ---
+ *       --- Part One ---
  *
  *   https://adventofcode.com/2021/day/18
  */
 
 type SFN struct {
-	left, right       int
-	leftSFN, rightSFN *SFN
-	depth             int
+	leftNum, rightNum   int
+	parent, left, right *SFN
 }
 
 func main() {
@@ -39,83 +40,134 @@ func doPart1() int {
 	var sum *SFN
 	for i := 0; scanner.Scan(); i++ {
 		line := scanner.Text()
-		log.Println(line)
-		sfn := parseSnailfishNumber(line)
-		log.Println(sfn)
+		sfn := parseSnailfishNumber(line, nil)
 		if sum == nil {
 			sum = sfn
 		} else {
 			sum = sum.add(sfn)
 		}
-		log.Println(sum)
-		log.Println()
 	}
 
-	sfn0 := SFN{left: 9, right: 1}
-	log.Println(sfn0.magnitude())
-	sfn1 := SFN{left: 1, right: 2}
-	sfn2 := SFN{left: 3, right: 4}
-	sfn3 := SFN{leftSFN: &sfn2, right: 5}
-	sfn4 := SFN{leftSFN: &sfn1, rightSFN: &sfn3}
-	log.Println(sfn4.magnitude())
-
-	return 0
+	fmt.Println("sum:", sum.toString())
+	return sum.magnitude()
 }
 
-func parseSnailfishNumber(line string) *SFN {
+func parseSnailfishNumber(line string, parent *SFN) *SFN {
 	sfn := SFN{}
+	line = line[1 : len(line)-1]
+	openings := 0
+	i := 0
+OUT:
+	for _, r := range line {
+		switch r {
+		case '[':
+			openings++
+		case ']':
+			openings--
+		case ',':
+			if openings == 0 {
+				break OUT
+			}
+		}
+		i++
+	}
 
+	leftStr := line[:i]
+	if leftStr[0] == '[' {
+		sfn.left = parseSnailfishNumber(leftStr, &sfn)
+	} else {
+		left, _ := strconv.Atoi(leftStr)
+		sfn.leftNum = left
+	}
+	rightStr := line[i+1:]
+	if rightStr[0] == '[' {
+		sfn.right = parseSnailfishNumber(rightStr, &sfn)
+	} else {
+		right, _ := strconv.Atoi(rightStr)
+		sfn.rightNum = right
+	}
 	return &sfn
 }
 
-func (sfn *SFN) add(otherSFN *SFN) *SFN {
-	newSFN := SFN{leftSFN: sfn, rightSFN: otherSFN}
-	return newSFN.reduce()
+func (sfn *SFN) toString() string {
+	var leftStr string
+	if sfn.left == nil {
+		leftStr = strconv.Itoa(sfn.leftNum)
+	} else {
+		leftStr = sfn.left.toString()
+	}
+	var rightStr string
+	if sfn.right == nil {
+		rightStr = strconv.Itoa(sfn.rightNum)
+	} else {
+		rightStr = sfn.right.toString()
+	}
+	return fmt.Sprintf("[%s,%s]", leftStr, rightStr)
 }
 
-func (sfn *SFN) reduce() *SFN {
+func (sfn *SFN) add(otherSFN *SFN) *SFN {
+	newSFN := SFN{left: sfn, right: otherSFN}
+	fmt.Println("after addition:", newSFN.toString())
+	newSFN.reduce()
+	return &newSFN
+}
+
+func (sfn *SFN) reduce() {
 	for {
-		if sfn, didExplode := sfn.explode(); !didExplode {
-			if sfn, didSplit := sfn.split(); !didSplit {
-				return sfn
+		if !sfn.explode(0) {
+			if !sfn.split() {
+				fmt.Println()
+				return
+			} else {
+				fmt.Println("after split:   ", sfn.toString())
 			}
+		} else {
+			fmt.Println("after explode: ", sfn.toString())
 		}
 	}
 }
 
-func (sfn *SFN) explode() (*SFN, bool) {
-	if sfn.rightSFN == nil && sfn.leftSFN != nil && sfn.leftSFN.isBasePair() && sfn.leftSFN.depth > 4 {
-
-		return sfn, true
+func (sfn *SFN) explode(depth int) bool {
+	if depth >= 4 {
+		return true
 	}
-	if sfn.leftSFN == nil && sfn.rightSFN != nil && sfn.rightSFN.isBasePair() && sfn.rightSFN.depth > 4 {
-
-		return sfn, true
-	}
-	return sfn, false
+	return false
 }
 
-func (sfn *SFN) split() (*SFN, bool) {
-
-	return sfn, true
-}
-
-func (sfn *SFN) isBasePair() bool {
-	return sfn.leftSFN == nil && sfn.rightSFN == nil
+func (sfn *SFN) split() (split bool) {
+	if sfn.left != nil && sfn.left.split() {
+		return true
+	}
+	if sfn.leftNum > 9 {
+		newPair := SFN{leftNum: sfn.leftNum / 2, rightNum: (sfn.leftNum + 1) / 2}
+		sfn.leftNum = 0
+		sfn.left = &newPair
+		return true
+	}
+	if sfn.rightNum > 9 {
+		newPair := SFN{leftNum: sfn.rightNum / 2, rightNum: (sfn.rightNum + 1) / 2}
+		sfn.rightNum = 0
+		sfn.right = &newPair
+		return true
+	}
+	if sfn.right != nil && sfn.right.split() {
+		return true
+	}
+	return false
 }
 
 func (sfn *SFN) magnitude() int {
 	var leftMag int
-	if sfn.leftSFN != nil {
-		leftMag = sfn.leftSFN.magnitude()
+	if sfn.left == nil {
+		leftMag = sfn.leftNum
 	} else {
-		leftMag = sfn.left
+		leftMag = sfn.left.magnitude()
 	}
 	var rightMag int
-	if sfn.rightSFN != nil {
-		rightMag = sfn.rightSFN.magnitude()
+	if sfn.right == nil {
+		rightMag = sfn.rightNum
 	} else {
-		rightMag = sfn.right
+		rightMag = sfn.right.magnitude()
 	}
 	return 3*leftMag + 2*rightMag
 }
