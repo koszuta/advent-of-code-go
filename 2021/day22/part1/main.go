@@ -38,8 +38,8 @@ func main() {
 		log.Println("took", time.Since(t))
 	}(time.Now())
 
-	x := doPart1()
-	log.Println(x)
+	nLitCubes := doPart1()
+	log.Println("the number of on cubes is", nLitCubes)
 }
 
 func doPart1() int {
