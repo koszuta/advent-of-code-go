@@ -1,13 +1,14 @@
 package main
 
 import (
+	"advent-of-code-go/2021/day18/sfn"
 	"bufio"
 	"log"
 	"os"
 	"time"
 )
 
-const expectedResult = 0
+const expectedResult = 4650
 
 /*
  *   --- Day 18: Snailfish ---
@@ -21,8 +22,8 @@ func main() {
 		log.Println("took", time.Since(t))
 	}(time.Now())
 
-	x := doPart2()
-	log.Println(x)
+	mag := doPart2()
+	log.Println("the largest magnitude of any sum of two different snailfish numbers", mag)
 }
 
 func doPart2() int {
@@ -30,10 +31,26 @@ func doPart2() int {
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 
-	for i := 0; scanner.Scan(); i++ {
-		line := scanner.Text()
-		log.Println(line)
+	sfns := make([]*sfn.SnailfishNumber, 0)
+	for scanner.Scan() {
+		sfn := sfn.ParseSnailfishNumber(scanner.Text(), nil)
+		sfns = append(sfns, sfn)
 	}
 
-	return 0
+	maxMag := 0
+	for i := 0; i < len(sfns); i++ {
+		for j := i + 1; j < len(sfns); j++ {
+			this, that := sfns[i].DeepCopy(), sfns[j].DeepCopy()
+			mag := this.Add(that).Magnitude()
+			if mag > maxMag {
+				maxMag = mag
+			}
+			this, that = sfns[i].DeepCopy(), sfns[j].DeepCopy()
+			mag = that.Add(this).Magnitude()
+			if mag > maxMag {
+				maxMag = mag
+			}
+		}
+	}
+	return maxMag
 }
