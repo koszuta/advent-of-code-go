@@ -9,12 +9,12 @@
 Day   <span style="color: #9999cc;">    Time  Rank  Score</span>   <span style="color: #ffff66;">    Time  Rank   Score</span>
  <a href="https://adventofcode.com/2021/day/25">25</a>   <a href="/2021/day25/part1/main.go">01:20:32   2913      0</a>   <a href="/2021/day25/part2/main.go">       -      -      -</a>
  <a href="https://adventofcode.com/2021/day/24">24</a>   <a href="/2021/day24/part1/main.go">04:50:54   1844      0</a>   <a href="/2021/day24/part2/main.go">04:53:12   1749      0</a>
- <a href="https://adventofcode.com/2021/day/23">23</a>   <a href="/2021/day23/part1/main.go">       -      -      -</a>   <a title="Traveling 🛩" href="/2021/day23/part2/main.go">       -      -      -</a>
+ <a href="https://adventofcode.com/2021/day/23">23</a>   <a title="Traveling 🛩" href="/2021/day23/part1/main.go">       -      -      -</a>   <a title="Traveling 🛩" href="/2021/day23/part2/main.go">       -      -      -</a>
  <a href="https://adventofcode.com/2021/day/22">22</a>   <a href="/2021/day22/part1/main.go">00:14:21   1019      0</a>   <a title="Traveling 🛩" href="/2021/day22/part2/main.go">    >24h  11201      0</a> 
  <a href="https://adventofcode.com/2021/day/21">21</a>   <a href="/2021/day21/part1/main.go">00:17:11   1730      0</a>   <a href="/2021/day21/part2/main.go">14:39:32  10646      0</a>
  <a href="https://adventofcode.com/2021/day/20">20</a>   <a href="/2021/day20/part1/main.go">01:45:26   3452      0</a>   <a href="/2021/day20/part2/main.go">01:49:14   3277      0</a>
- <a href="https://adventofcode.com/2021/day/19">19</a>   <a href="/2021/day19/part1/main.go">       -      -      -</a>   <a title="Moving 🚚🏠" href="/2021/day19/part2/main.go">       -      -      -</a>
- <a href="https://adventofcode.com/2021/day/18">18</a>   <a href="/2021/day18/part1/main.go">    >24h  21045      0</a>   <a title="Moving 🚚🏠" href="/2021/day18/part2/main.go">    >24h  21045      0</a>
+ <a href="https://adventofcode.com/2021/day/19">19</a>   <a title="Moving 🚚🏠" href="/2021/day19/part1/main.go">       -      -      -</a>   <a title="Moving 🚚🏠" href="/2021/day19/part2/main.go">       -      -      -</a>
+ <a href="https://adventofcode.com/2021/day/18">18</a>   <a title="Moving 🚚🏠" href="/2021/day18/part1/main.go">    >24h  21045      0</a>   <a title="Moving 🚚🏠" href="/2021/day18/part2/main.go">    >24h  21045      0</a>
  <a href="https://adventofcode.com/2021/day/17">17</a>   <a href="/2021/day17/part1/main.go">00:40:04   2764      0</a>   <a href="/2021/day17/part2/main.go">00:43:15   1966      0</a>
  <a href="https://adventofcode.com/2021/day/16">16</a>   <a href="/2021/day16/part1/main.go">00:56:10   1573      0</a>   <a href="/2021/day16/part2/main.go">01:21:24   1834      0</a>
  <a href="https://adventofcode.com/2021/day/15">15</a>   <a href="/2021/day15/part1/main.go">01:17:40   4670      0</a>   <a href="/2021/day15/part2/main.go">16:18:22  19588      0</a>
