@@ -15,7 +15,7 @@ type Step struct {
 func main() {
 	var stackLines, stepLines []string
 	{ // separate stack and step lines
-		b, _ := os.ReadFile("./input.txt")
+		b, _ := os.ReadFile("../input.txt")
 		lines := strings.Split(string(b), "\n\n")
 
 		stackLines = strings.Split(lines[0], "\n")

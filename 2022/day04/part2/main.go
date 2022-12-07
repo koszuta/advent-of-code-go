@@ -12,7 +12,7 @@ type Range struct {
 }
 
 func main() {
-	b, _ := os.ReadFile("./input.txt")
+	b, _ := os.ReadFile("../input.txt")
 	lines := strings.Split(string(b), "\n")
 
 	var count int
