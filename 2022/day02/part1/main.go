@@ -12,6 +12,8 @@ func main() {
 
 	var score int
 	for _, line := range lines {
+		line = strings.TrimSpace(line) // sanitize CRLF
+
 		// Points for the shape
 		switch line[2] {
 		case 'X':

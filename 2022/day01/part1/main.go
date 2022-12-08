@@ -13,6 +13,8 @@ func main() {
 
 	sum, max := 0, 0
 	for _, line := range lines {
+		line = strings.TrimSpace(line) // sanitize CRLF
+
 		if line == "" {
 			if sum > max {
 				max = sum

@@ -15,6 +15,8 @@ func main() {
 	var sum int
 	calorieTotals := make([]int, 0)
 	for _, line := range lines {
+		line = strings.TrimSpace(line) // sanitize CRLF
+
 		if line == "" {
 			calorieTotals = append(calorieTotals, sum)
 			sum = 0

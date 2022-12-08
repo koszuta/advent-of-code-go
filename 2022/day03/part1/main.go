@@ -12,6 +12,7 @@ func main() {
 
 	var sum int
 	for _, line := range lines {
+		line = strings.TrimSpace(line) // sanitize CRLF
 
 		nHalf := len(line) / 2
 		c1, c2 := make(map[rune]int, nHalf), make(map[rune]int, nHalf)

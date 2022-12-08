@@ -17,6 +17,8 @@ func main() {
 
 	var count int
 	for _, line := range lines {
+		line = strings.TrimSpace(line) // sanitize CRLF
+
 		var pair [2]Range
 		for i, part := range strings.Split(line, ",") {
 			sections := strings.Split(part, "-")

@@ -15,6 +15,8 @@ func main() {
 
 	var path string
 	for _, line := range lines {
+		line = strings.TrimSpace(line) // sanitize CRLF
+
 		switch {
 		default: // listed file with size
 			size, _ := strconv.Atoi(strings.Split(line, " ")[0])
