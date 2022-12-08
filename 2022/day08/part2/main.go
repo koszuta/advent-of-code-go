@@ -14,12 +14,11 @@ func main() {
 	trees := make([][]int, 0)
 
 	for _, line := range lines {
+		line = strings.TrimSpace(line) // sanitize CRLF
+
 		row := make([]int, 0)
 		for _, r := range line {
-			height, err := strconv.Atoi(string(r))
-			if err != nil {
-				log.Fatalln(err)
-			}
+			height, _ := strconv.Atoi(string(r))
 			row = append(row, height)
 		}
 		trees = append(trees, row)
