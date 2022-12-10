@@ -5,6 +5,8 @@
 <pre>
       <span style="color: #9999cc;">--------Part 1---------</span>   <span style="color: #ffff66;">--------Part 2---------</span>
 Day   <span style="color: #9999cc;">    Time    Rank  Score</span>   <span style="color: #ffff66;">    Time    Rank  Score</span>
+ <a href="https://adventofcode.com/2022/day/10">10</a>   <a href="/2022/day10/part1/main.go">00:11:18    1382      0</a>   <a href="/2022/day10/part2/main.go">00:38:59    3612      0</a>
+  <a href="https://adventofcode.com/2022/day/9">9</a>   <a href="/2022/day09/part1/main.go">00:29:16    3877      0</a>   <a href="/2022/day09/part2/main.go">00:34:20    1730      0</a>
   <a href="https://adventofcode.com/2022/day/8">8</a>   <a href="/2022/day08/part1/main.go">00:17:31    2503      0</a>   <a href="/2022/day08/part2/main.go">00:32:05    2457      0</a>
   <a href="https://adventofcode.com/2022/day/7">7</a>   <a href="/2022/day07/part1/main.go">00:21:30     936      0</a>   <a href="/2022/day07/part2/main.go">00:26:52     910      0</a>
   <a href="https://adventofcode.com/2022/day/6">6</a>   <a href="/2022/day06/part1/main.go">00:09:05    5475      0</a>   <a href="/2022/day06/part2/main.go">00:10:54    5127      0</a>
