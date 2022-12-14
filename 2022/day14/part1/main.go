@@ -28,6 +28,9 @@ func init() {
 	for i, line := range lines {
 		lines[i] = strings.TrimSpace(line) // sanitize CRLF
 	}
+	if lines[len(lines)-1] == "" {
+		lines = lines[:len(lines)-2]
+	}
 }
 
 func main() {
