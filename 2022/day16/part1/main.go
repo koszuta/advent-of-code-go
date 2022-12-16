@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -49,15 +50,23 @@ func main() {
 		connections[valve] = strings.Split(matches[3], ", ")
 	}
 
-	doFindMaxFlow(0, 30, "AA", map[string]struct{}{}, map[string]struct{}{})
+	remainingPressures := make([]int, 0, len(pressures))
+	for _, pressure := range pressures {
+		remainingPressures = append(remainingPressures, pressure)
+	}
+	sort.Slice(remainingPressures, func(i, j int) bool {
+		return remainingPressures[i] > remainingPressures[j]
+	})
+
+	doFindMaxFlow(0, 30, "AA", remainingPressures, map[string]struct{}{}, map[string]struct{}{})
 
 	log.Println("most pressure released:", maxFlow)
 }
 
-func doFindMaxFlow(flow, minute int, valve string, opened, visited map[string]struct{}) {
-	if minute == 0 || len(opened) == len(pressures) {
-		if flow > maxFlow {
-			maxFlow = flow
+func doFindMaxFlow(totalPressure, minute int, valve string, remainingPressures []int, opened, visited map[string]struct{}) {
+	if minute == 0 || len(remainingPressures) == 0 || PotentialPressure(minute, remainingPressures)+totalPressure < maxFlow {
+		if totalPressure > maxFlow {
+			maxFlow = totalPressure
 		}
 		return
 	}
@@ -68,7 +77,7 @@ func doFindMaxFlow(flow, minute int, valve string, opened, visited map[string]st
 	if pressure, pressurized := pressures[valve]; pressurized {
 		if _, open := opened[valve]; !open {
 			opened[valve] = struct{}{}
-			doFindMaxFlow(flow+pressure*minute, minute, valve, opened, map[string]struct{}{valve: {}})
+			doFindMaxFlow(totalPressure+pressure*minute, minute, valve, Remove(pressure, remainingPressures), opened, map[string]struct{}{valve: {}})
 			delete(opened, valve)
 		}
 	}
@@ -77,8 +86,26 @@ func doFindMaxFlow(flow, minute int, valve string, opened, visited map[string]st
 	for _, nextValve := range connections[valve] {
 		if _, found := visited[nextValve]; !found {
 			visited[nextValve] = struct{}{}
-			doFindMaxFlow(flow, minute, nextValve, opened, visited)
+			doFindMaxFlow(totalPressure, minute, nextValve, remainingPressures, opened, visited)
 			delete(visited, nextValve)
 		}
 	}
+}
+
+func PotentialPressure(t int, remainingPressures []int) (potentialPressure int) {
+	for i, t := 0, t; i < len(remainingPressures) && t > 0; i, t = i+1, t-2 {
+		potentialPressure += remainingPressures[i] * t
+	}
+	return
+}
+
+func Remove(target int, s []int) []int {
+	newS := make([]int, len(s))
+	copy(newS, s)
+	for i, v := range newS {
+		if v == target {
+			return append(newS[:i], newS[i+1:]...)
+		}
+	}
+	return s
 }
